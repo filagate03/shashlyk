@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шашлык-Машлык - Доставка шашлыка</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #D32F2F;
+            --secondary-color: #FF8F00;
+            --accent-color: #388E3C;
+            --dark-color: #424242;
+            --light-color: #FAFAFA;
+            --gray-color: #F5F5F5;
+            --gold: #FFD700;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap');
+        
+        body {
+            background-color: var(--light-color);
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Play', sans-serif;
+        }
+        
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            padding: 10px 0;
+        }
+        
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: bold;
+            font-size: 1.8rem;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            position: relative;
+            margin: 0 10px;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1585933308392-6a9aa0dd6fe3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 0 80px;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 20%, black 90%);
+            opacity: 0.7;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 35px;
+            position: relative;
+            padding-bottom: 15px;
+            text-align: center;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 3px;
+        }
+        
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            transform: translateY(0);
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .menu-item-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .menu-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .menu-item:hover .menu-item-img img {
+            transform: scale(1.05);
+        }
+        
+        .menu-item-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--gold);
+            color: var(--dark-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .menu-item-content {
+            padding: 20px;
+        }
+        
+        .menu-item-title {
+            font-weight: bold;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .menu-item-description {
+            color: #757575;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            min-height: 60px;
+        }
+        
+        .menu-item-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .menu-item-weight {
+            background: var(--gray-color);
+            color: var(--dark-color);
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        
+        .menu-item-rating {
+            color: var(--gold);
+        }
+        
+        .menu-item-price {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary-color), #b71c1c);
+            border: none;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(211, 47, 47, 0.3);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .btn-primary:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn-primary:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(to right, var(--secondary-color), #e65100);
+            border: none;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(255, 143, 0, 0.3);
+        }
+        
+        .cart-item {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .cart-item:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            background: var(--gray-color);
+            border-radius: 30px;
+            padding: 5px;
+        }
+        
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .quantity-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .quantity-value {
+            min-width: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .footer {
+            background: linear-gradient(to right, #2c0000, #4a0000);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .feature-box {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
+        }
+        
+        .cart-summary {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 20px;
+        }
+        
+        .cart-summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .cart-total {
+            border-top: 2px dashed var(--gray-color);
+            padding-top: 15px;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .form-control {
+            border-radius: 10px;
+            padding: 12px 15px;
+            border: 2px solid #eee;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(211, 47, 47, 0.25);
+        }
+        
+        .auth-form {
+            max-width: 500px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .auth-title {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        
+        .auth-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(50, 50);
+                opacity: 0;
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(211, 47, 47, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(211, 47, 47, 0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 80px 0 50px;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .menu-item-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .menu-item-weight {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-utensils me-2"></i>Шашлык-Машлык
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#menu">Меню</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cart">Корзина</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">О нас</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-primary me-2" onclick="showLogin()">
+                        <i class="fas fa-sign-in-alt me-1"></i> Войти
+                    </button>
+                    <button class="btn btn-primary" onclick="showRegister()">
+                        <i class="fas fa-user-plus me-1"></i> Регистрация
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Вход в аккаунт</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Пароль</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Войти</button>
+                    </form>
+                    <div class="auth-link">
+                        <p>Нет аккаунта? <a href="#" onclick="showRegister(); return false;">Зарегистрируйтесь</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Регистрация</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="registerName" class="form-label">Имя</label>
+                            <input type="text" class="form-control" id="registerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPhone" class="form-label">Телефон</label>
+                            <input type="tel" class="form-control" id="registerPhone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Пароль</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerConfirmPassword" class="form-label">Подтвердите пароль</label>
+                            <input type="password" class="form-control" id="registerConfirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
+                    </form>
+                    <div class="auth-link">
+                        <p>Уже есть аккаунт? <a href="#" onclick="showLogin(); return false;">Войдите</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container hero-content">
+            <h1 class="display-3 fw-bold mb-4">Шашлык-Машлык</h1>
+            <p class="lead mb-5">Восточные деликатесы с домашним уютом. Свежайшее мясо на мангале, традиционные рецепты и быстрая доставка.</p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <a href="#menu" class="btn btn-primary btn-lg pulse">
+                    <i class="fas fa-utensils me-2"></i>Заказать онлайн
+                </a>
+                <a href="#about" class="btn btn-light btn-lg">
+                    <i class="fas fa-info-circle me-2"></i>О нас
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="container mb-5">
+        <h2 class="section-title">Почему выбирают нас</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h4>Свежее мясо</h4>
+                    <p>Отборное мясо, приготовленное на углях по традиционным рецептам</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h4>Быстрая доставка</h4>
+                    <p>Доставим горячий шашлык в течение 45-60 минут</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h4>Бонусы</h4>
+                    <p>Программа лояльности с накопительными скидками</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="container mb-5">
+        <h2 class="section-title">Наше меню</h2>
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <div class="menu-item">
+                    <div class="menu-item-img">
+                        <span class="menu-item-badge">Хит продаж</span>
+                        <img src="https://images.unsplash.com/photo-1612365162249-3a2dd0d1e6e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Шашлык из свинины">
+                    </div>
+                    <div class="menu-item-content">
+                        <h4 class="menu-item-title">Шашлык из свинины</h4>
+                        <p class="menu-item-description">Нежное свиное мясо, маринованное в секретном соусе по семейному рецепту</p>
+                        <div class="menu-item-meta">
+                            <span class="menu-item-weight">100 г</span>
+                            <div class="menu-item-rating">
+                                <i class="fas fa-star"></i> 4.8
+                            </div>
+                        </div>
+                        <div class="menu-item-price">350 ₽</div>
+                        <button class="btn btn-primary w-100 add-to-cart" data-id="1" data-name="Шашлык из свинины" data-price="350">
+                            <i class="fas fa-plus me-2"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="menu-item">
+                    <div class="menu-item-img">
+                        <img src="https://images.unsplash.com/photo-1634233961945-7d3ecd94e750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Шашлык из говядины">
+                    </div>
+                    <div class="menu-item-content">
+                        <h4 class="menu-item-title">Шашлык из говядины</h4>
+                        <p class="menu-item-description">Отборная говядина, приготовленная на углях до совершенства</p>
+                        <div class="menu-item-meta">
+                            <span class="menu-item-weight">100 г</span>
+                            <div class="menu-item-rating">
+                                <i class="fas fa-star"></i> 4.9
+                            </div>
+                        </div>
+                        <div class="menu-item-price">420 ₽</div>
+                        <button class="btn btn-primary w-100 add-to-cart" data-id="2" data-name="Шашлык из говядины" data-price="420">
+                            <i class="fas fa-plus me-2"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="menu-item">
+                    <div class="menu-item-img">
+                        <img src="https://images.unsplash.com/photo-1618698045872-55731a4d7f78?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Люля-кебаб">
+                    </div>
+                    <div class="menu-item-content">
+                        <h4 class="menu-item-title">Люля-кебаб</h4>
+                        <p class="menu-item-description">Традиционные люля-кебаб из баранины с ароматными специями</p>
+                        <div class="menu-item-meta">
+                            <span class="menu-item-weight">150 г</span>
+                            <div class="menu-item-rating">
+                                <i class="fas fa-star"></i> 4.7
+                            </div>
+                        </div>
+                        <div class="menu-item-price">380 ₽</div>
+                        <button class="btn btn-primary w-100 add-to-cart" data-id="3" data-name="Люля-кебаб" data-price="380">
+                            <i class="fas fa-plus me-2"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="menu-item">
+                    <div class="menu-item-img">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Салат Овощной">
+                    </div>
+                    <div class="menu-item-content">
+                        <h4 class="menu-item-title">Салат Овощной</h4>
+                        <p class="menu-item-description">Свежие овощи с домашней заправкой</p>
+                        <div class="menu-item-meta">
+                            <span class="menu-item-weight">200 г</span>
+                            <div class="menu-item-rating">
+                                <i class="fas fa-star"></i> 4.5
+                            </div>
+                        </div>
+                        <div class="menu-item-price">150 ₽</div>
+                        <button class="btn btn-primary w-100 add-to-cart" data-id="4" data-name="Салат Овощной" data-price="150">
+                            <i class="fas fa-plus me-2"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="menu-item">
+                    <div class="menu-item-img">
+                        <img src="https://images.unsplash.com/photo-1585109649139-366815a0d713?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Картофель по-деревенски">
+                    </div>
+                    <div class="menu-item-content">
+                        <h4 class="menu-item-title">Картофель по-деревенски</h4>
+                        <p class="menu-item-description">Ароматный картофель, запеченный на углях</p>
+                        <div class="menu-item-meta">
+                            <span class="menu-item-weight">150 г</span>
+                            <div class="menu-item-rating">
+                                <i class="fas fa-star"></i> 4.6
+                            </div>
+                        </div>
+                        <div class="menu-item-price">120 ₽</div>
+                        <button class="btn btn-primary w-100 add-to-cart" data-id="5" data-name="Картофель по-деревенски" data-price="120">
+                            <i class="fas fa-plus me-2"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="menu-item">
+                    <div class="menu-item-img">
+                        <span class="menu-item-badge">Комбо</span>
+                        <img src="https://images.unsplash.com/photo-1573462910101-15e180c90ba4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Комбо-набор">
+                    </div>
+                    <div class="menu-item-content">
+                        <h4 class="menu-item-title">Комбо-набор</h4>
+                        <p class="menu-item-description">Шашлык из свинины, картофель, салат и соус на выбор</p>
+                        <div class="menu-item-meta">
+                            <span class="menu-item-weight">500 г</span>
+                            <div class="menu-item-rating">
+                                <i class="fas fa-star"></i> 4.9
+                            </div>
+                        </div>
+                        <div class="menu-item-price">550 ₽</div>
+                        <button class="btn btn-primary w-100 add-to-cart" data-id="6" data-name="Комбо-набор" data-price="550">
+                            <i class="fas fa-plus me-2"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Section -->
+    <section id="cart" class="container mb-5">
+        <h2 class="section-title">Ваш заказ</h2>
+        <div class="row">
+            <div class="col-lg-8">
+                <div id="cartItems">
+                    <!-- Cart items will be dynamically added here -->
+                    <div class="text-center py-5">
+                        <i class="fas fa-shopping-cart fa-3x mb-3" style="color: #ddd;"></i>
+                        <h5>Ваша корзина пуста</h5>
+                        <p class="text-muted">Добавьте блюда из меню, чтобы сделать заказ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="cart-summary">
+                    <h5 class="mb-4">Итого</h5>
+                    <div class="cart-summary-item">
+                        <span>Сумма заказа:</span>
+                        <span id="cartSubtotal">0 ₽</span>
+                    </div>
+                    <div class="cart-summary-item">
+                        <span>Доставка:</span>
+                        <span id="cartDelivery">Бесплатно</span>
+                    </div>
+                    <div class="cart-summary-item cart-total">
+                        <span>К оплате:</span>
+                        <span id="cartTotal">0 ₽</span>
+                    </div>
+                    <button class="btn btn-primary w-100 mt-4" id="checkoutBtn" disabled>
+                        <i class="fas fa-check-circle me-2"></i>Оформить заказ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="container mb-5">
+        <h2 class="section-title">О нас</h2>
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <p>Ресторан "Шашлык-Машлык" - это семейное заведение, которое уже более 10 лет радует гостей Москвы свежими и вкусными шашлыками, приготовленными по традиционным рецептам на углях.</p>
+                <p>Мы используем только отборное мясо, маринуем его в домашних соусах и готовим на мангалах, что придает нашим блюдам особенный аромат и вкус.</p>
+                <p>Наша доставка работает ежедневно с 11:00 до 23:00. Мы гарантируем свежесть блюд и быструю доставку горячего шашлыка в течение 45-60 минут.</p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-4 text-center">
+                        <div class="mb-2">
+                            <i class="fas fa-utensils fa-2x" style="color: var(--primary-color);"></i>
+                        </div>
+                        <h5>10+ лет</h5>
+                        <p class="text-muted">опыта</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="mb-2">
+                            <i class="fas fa-users fa-2x" style="color: var(--primary-color);"></i>
+                        </div>
+                        <h5>15 000+</h5>
+                        <p class="text-muted">довольных клиентов</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="mb-2">
+                            <i class="fas fa-star fa-2x" style="color: var(--primary-color);"></i>
+                        </div>
+                        <h5>4.8/5</h5>
+                        <p class="text-muted">рейтинг</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Наш ресторан" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h4 class="text-white mb-4">Шашлык-Машлык</h4>
+                    <p>Восточные деликатесы с домашним уютом. Свежайшее мясо на мангале, традиционные рецепты и быстрая доставка.</p>
+                    <div class="d-flex gap-3 mt-4">
+                        <a href="#" class="text-white"><i class="fab fa-vk fa-2x"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-telegram fa-2x"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram fa-2x"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-white mb-4">Меню</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Шашлыки</a></li>
+                        <li><a href="#" class="text-white">Люля-кебаб</a></li>
+                        <li><a href="#" class="text-white">Салаты</a></li>
+                        <li><a href="#" class="text-white">Гарниры</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-white mb-4">Контакты</h5>
+                    <ul class="list-unstyled">
+                        <li class="text-white mb-2"><i class="fas fa-map-marker-alt me-2"></i> г. Москва, ул. Ленина, 25</li>
+                        <li class="text-white mb-2"><i class="fas fa-phone me-2"></i> +7 (495) 123-45-67</li>
+                        <li class="text-white mb-2"><i class="fas fa-clock me-2"></i> Ежедневно: 11:00 - 23:00</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="text-center">
+                <p>&copy; 2023 Шашлык-Машлык. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Cart functionality
+        let cart = [];
+        
+        // Add to cart buttons
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.dataset.id;
+                const name = this.dataset.name;
+                const price = parseFloat(this.dataset.price);
+                
+                // Check if item already in cart
+                const existingItem = cart.find(item => item.id === id);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: id,
+                        name: name,
+                        price: price,
+                        quantity: 1
+                    });
+                }
+                
+                updateCart();
+                
+                // Show visual feedback
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check me-2"></i> Добавлено!';
+                this.classList.remove('btn-primary');
+                this.classList.add('btn-success');
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.classList.remove('btn-success');
+                    this.classList.add('btn-primary');
+                }, 1500);
+            });
+        });
+        
+        // Update cart display
+        function updateCart() {
+            const cartItemsElement = document.getElementById('cartItems');
+            const cartSubtotalElement = document.getElementById('cartSubtotal');
+            const cartTotalElement = document.getElementById('cartTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            
+            if (cart.length === 0) {
+                cartItemsElement.innerHTML = `
+                    <div class="text-center py-5">
+                        <i class="fas fa-shopping-cart fa-3x mb-3" style="color: #ddd;"></i>
+                        <h5>Ваша корзина пуста</h5>
+                        <p class="text-muted">Добавьте блюда из меню, чтобы сделать заказ</p>
+                    </div>
+                `;
+                cartSubtotalElement.textContent = '0 ₽';
+                cartTotalElement.textContent = '0 ₽';
+                checkoutBtn.disabled = true;
+                return;
+            }
+            
+            let cartHTML = '';
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                cartHTML += `
+                    <div class="cart-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5>${item.name}</h5>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <span class="me-3 fw-bold">${itemTotal} ₽</span>
+                                <div class="quantity-control">
+                                    <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                                    <span class="quantity-value">${item.quantity}</span>
+                                    <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                                </div>
+                                <button class="btn btn-link text-danger ms-3 remove-item" data-id="${item.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            cartItemsElement.innerHTML = cartHTML;
+            cartSubtotalElement.textContent = subtotal + ' ₽';
+            cartTotalElement.textContent = subtotal + ' ₽';
+            checkoutBtn.disabled = false;
+            
+            // Add event listeners to new buttons
+            document.querySelectorAll('.minus').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.dataset.id;
+                    const item = cart.find(item => item.id === id);
+                    if (item.quantity > 1) {
+                        item.quantity -= 1;
+                    } else {
+                        cart = cart.filter(item => item.id !== id);
+                    }
+                    updateCart();
+                });
+            });
+            
+            document.querySelectorAll('.plus').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.dataset.id;
+                    const item = cart.find(item => item.id === id);
+                    item.quantity += 1;
+                    updateCart();
+                });
+            });
+            
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.dataset.id;
+                    cart = cart.filter(item => item.id !== id);
+                    updateCart();
+                });
+            });
+        }
+        
+        // Auth functions
+        function showLogin() {
+            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            loginModal.show();
+        }
+        
+        function showRegister() {
+            const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+            registerModal.show();
+        }
+        
+        // Form submissions
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // In a real app, you would send the data to your backend
+            alert('Функция входа будет реализована при подключении к серверу');
+        });
+        
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // In a real app, you would send the data to your backend
+            alert('Функция регистрации будет реализована при подключении к серверу');
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
